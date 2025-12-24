@@ -1,0 +1,27 @@
+{
+  "name": "我有一个想法",
+  "version": "1.0.0",
+  "description": "一个可以发布需求信息、点赞评论、根据热度生成每日排行的网站",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "ideas",
+    "ranking",
+    "social"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.0.2",
+    "sqlite3": "^5.1.6"
+  }
+}
+

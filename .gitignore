@@ -1,0 +1,6 @@
+node_modules/
+ideas.db
+*.log
+.DS_Store
+
+
