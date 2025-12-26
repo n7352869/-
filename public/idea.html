@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>想法详情</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .detail-container { max-width: 900px; margin: 20px auto; }
+    .detail-card { background:#fff; border-radius:16px; padding:20px; box-shadow:0 4px 16px rgba(0,0,0,0.12); }
+    .detail-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
+    .detail-title { font-size:1.6em; font-weight:700; color:#333; }
+    .detail-meta { color:#999; font-size:0.9em; margin-bottom:12px; display:flex; gap:12px; flex-wrap:wrap; }
+    .detail-actions { display:flex; gap:10px; margin-top:10px; }
+    .like-btn { padding:8px 14px; border-radius:20px; border:1px solid #eee; background:#fafafa; cursor:pointer; }
+    .comment-section { margin-top:24px; }
+    .back-link { display:inline-block; margin-bottom:10px; color:#667eea; text-decoration:none; }
+  </style>
+</head>
+<body>
+  <div class="detail-container">
+    <a href="/" class="back-link">← 返回列表</a>
+    <div class="detail-card" id="ideaDetail">
+      <div class="detail-header">
+        <div class="detail-title" id="detailTitle"></div>
+        <span class="idea-category" id="detailCategory"></span>
+      </div>
+      <div class="detail-meta">
+        <span id="detailAuthor"></span>
+        <span id="detailTime"></span>
+      </div>
+      <img id="detailImage" class="idea-image" style="display:none;" alt="idea-image">
+      <div class="idea-content" id="detailContent"></div>
+      <div class="detail-actions">
+        <button class="action-btn like-btn" id="detailLikeBtn">
+          <span class="like-icon">👍</span>
+          <span class="like-count" id="detailLikeCount">0</span>
+        </button>
+        <button class="action-btn favorite-btn" id="detailFavoriteBtn">⭐ 收藏</button>
+        <button class="action-btn" id="detailEditBtn">✏️ 编辑</button>
+        <button class="action-btn" id="detailDeleteBtn">🗑 删除</button>
+      </div>
+      <div class="comment-section">
+        <h3>评论</h3>
+        <div id="detailCommentList"></div>
+        <form id="detailCommentForm" class="publish-form">
+          <textarea id="detailCommentContent" placeholder="写下你的评论..." rows="3" required></textarea>
+          <div class="publish-row">
+            <input type="text" id="detailCommentAuthor" placeholder="你的名字（可选）">
+            <input type="file" id="detailCommentImage" accept="image/*" style="display:none;">
+            <label for="detailCommentImage" class="tab-btn">选择图片</label>
+            <button type="submit" class="btn-primary">发表评论</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="idea.js"></script>
+</body>
+</html>

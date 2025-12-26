@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我有一个想法</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      /* 防止初始闪烁 */
+      body { visibility: hidden; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💡 我有一个创意</h1>
+            <p class="subtitle">分享你的点子，让世界帮助你实现</p>
+            <!-- 左上角标签导航 -->
+            <div class="top-tabs">
+                <nav class="tabs">
+                    <div class="tab-with-dropdown">
+                      <button class="tab-btn active" data-tab="all">全部想法</button>
+                      <div class="tab-dropdown">
+                        <button class="dropdown-item" data-category="创业点子">创业点子</button>
+                        <button class="dropdown-item" data-category="消费需求">消费需求</button>
+                        <button class="dropdown-item" data-category="项目助力">项目助力</button>
+                        <button class="dropdown-item" data-category="灵光空想">灵光空想</button>
+                        <button class="dropdown-item" data-category="科技数码">科技数码</button>
+                        <button class="dropdown-item" data-category="文化娱乐">文化娱乐</button>
+                        <button class="dropdown-item" data-category="生活日用">生活日用</button>
+                      </div>
+                    </div>
+                    <div class="tab-with-dropdown">
+                      <button class="tab-btn" data-tab="daily">热度排行</button>
+                      <div class="tab-dropdown">
+                        <button class="dropdown-item" data-category="创业点子">创业点子</button>
+                        <button class="dropdown-item" data-category="消费需求">消费需求</button>
+                        <button class="dropdown-item" data-category="项目助力">项目助力</button>
+                        <button class="dropdown-item" data-category="灵光空想">灵光空想</button>
+                        <button class="dropdown-item" data-category="科技数码">科技数码</button>
+                        <button class="dropdown-item" data-category="文化娱乐">文化娱乐</button>
+                        <button class="dropdown-item" data-category="生活日用">生活日用</button>
+                      </div>
+                    </div>
+                </nav>
+            </div>
+            <div id="authArea" class="auth-area">
+                <button id="openAuthBtn" class="tab-btn">登录 / 注册</button>
+                <span id="userInfo" style="display:none;">
+                  已登录：<span id="usernameLabel"></span>
+                   <a id="myProfileLink" class="tab-btn" href="/user.html" style="margin-left:8px;">我的主页</a>
+                   <button id="logoutBtn" class="tab-btn" style="margin-left:8px;">退出登录</button>
+                  <button id="openBanwordsBtn" class="tab-btn" style="margin-left:8px; display:none;">违禁词管理</button>
+                  <button id="openUsersAdminBtn" class="tab-btn" style="margin-left:8px; display:none;">用户列表</button>
+                </span>
+            </div>
+        </header>
+
+        <!-- 顶部横宽发布栏 -->
+        <section class="publish-bar">
+            <form id="ideaForm" class="publish-form">
+                <textarea id="ideaContent" placeholder="分享你的创意..." rows="3" required></textarea>
+                <div class="publish-row">
+                    <input type="text" id="ideaTitle" placeholder="标题" required>
+                    <select id="ideaCategory" class="category-select" required>
+                        <option value="创业点子">创业点子</option>
+                        <option value="消费需求">消费需求</option>
+                        <option value="项目助力">项目助力</option>
+                        <option value="灵光空想" selected>灵光空想</option>
+                        <option value="科技数码">科技数码</option>
+                        <option value="文化娱乐">文化娱乐</option>
+                        <option value="生活日用">生活日用</option>
+                    </select>
+                    <input type="file" id="ideaImage" accept="image/*" style="display:none;">
+                    <label for="ideaImage" class="tab-btn">选择图片</label>
+                    <input type="text" id="ideaAuthor" placeholder="你的名字（可选）">
+                    <button type="submit" class="btn-primary">发布</button>
+                </div>
+            </form>
+        </section>
+
+        <nav class="categories">
+            <button class="category-btn" data-category="创业点子">创业点子</button>
+            <button class="category-btn" data-category="消费需求">消费需求</button>
+            <button class="category-btn" data-category="项目助力">项目助力</button>
+            <button class="category-btn" data-category="灵光空想">灵光空想</button>
+            <button class="category-btn" data-category="科技数码">科技数码</button>
+            <button class="category-btn" data-category="文化娱乐">文化娱乐</button>
+            <button class="category-btn" data-category="生活日用">生活日用</button>
+        </nav>
+
+        
+
+        <div class="main-content">
+            <main class="ideas-list">
+                <div id="loading" class="loading">加载中...</div>
+                <div id="ideasContainer"></div>
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <p>还没有想法，快来发布第一个吧！</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 登录提示面板 -->
+    <div id="loginHint" class="login-hint-panel" style="display:none;">
+        <div class="login-hint-content">
+            <span class="close-hint" id="closeLoginHint">&times;</span>
+            <p>请登录后发布</p>
+            <button id="goToLoginBtn" class="btn-primary btn-sm" style="padding: 6px 15px; font-size: 0.9em;">去登录</button>
+        </div>
+    </div>
+
+    <!-- 评论模态框 -->
+    <div id="commentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>评论</h2>
+            <div id="commentList"></div>
+            <form id="commentForm">
+                <input type="text" id="commentAuthor" placeholder="你的名字（可选）">
+                <textarea id="commentContent" placeholder="写下你的评论..." rows="3" required></textarea>
+                <input type="file" id="commentImage" accept="image/*" style="display:none;">
+                <label for="commentImage" class="tab-btn">选择图片</label>
+                <button type="submit" class="btn-primary">发表评论</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 认证模态框 -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="authClose">&times;</span>
+            <h2>登录 / 注册</h2>
+            <div style="display:flex; gap:20px; flex-wrap:wrap;">
+              <form id="loginForm" style="flex:1; min-width:260px;">
+                <h3>登录</h3>
+                <input type="text" id="loginUsername" placeholder="用户名" required>
+                <input type="password" id="loginPassword" placeholder="密码" required>
+                <button type="submit" class="btn-primary">登录</button>
+              </form>
+              <form id="registerForm" style="flex:1; min-width:260px;">
+                <h3>注册</h3>
+                <input type="text" id="registerUsername" placeholder="用户名（3-20）" required>
+                <input type="password" id="registerPassword" placeholder="密码（≥6位）" required>
+                <button type="submit" class="btn-primary">注册</button>
+              </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="banwordsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="banwordsClose">&times;</span>
+            <h2>违禁词词库</h2>
+            <p class="muted">每行一个词，保存后即时生效</p>
+            <textarea id="banwordsTextarea" rows="12" style="width:100%;"></textarea>
+            <div style="margin-top:12px;">
+              <button id="saveBanwordsBtn" class="btn-primary">保存</button>
+            </div>
+            <div id="banwordsStatus" class="muted" style="margin-top:8px;"></div>
+        </div>
+    </div>
+    
+    <div id="usersAdminModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="usersAdminClose">&times;</span>
+            <h2>用户列表</h2>
+            <div class="muted" id="usersAdminCount" style="margin-bottom:8px;"></div>
+            <div id="usersAdminList" class="list"></div>
+            <div class="muted" id="usersAdminStatus" style="margin-top:8px;"></div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    <script>
+      // 页面加载后显示，减少闪烁
+      document.addEventListener('DOMContentLoaded', () => {
+        document.body.style.visibility = 'visible';
+      });
+    </script>
+</body>
+</html>
+

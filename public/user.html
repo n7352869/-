@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户主页</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .profile-header { text-align:center; color:white; margin-bottom: 20px; }
+    .profile-tabs { display:flex; gap:10px; justify-content:center; margin-bottom:16px; }
+    .section { background:white; padding:16px; border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.12); margin-bottom:16px; }
+    .list { display:flex; flex-direction:column; gap:16px; }
+    .comment-item { background:#f9f9f9; padding:12px; border-radius:8px; }
+    .message-item { background:#f9f9f9; padding:12px; border-radius:8px; }
+    .muted { color:#666; }
+  </style>
+  <script src="user.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <header class="profile-header">
+      <a href="/" class="tab-btn" style="position:absolute;top:20px;left:20px;">← 返回主页</a>
+      <h1>👤 用户：<span id="profileUsername"></span></h1>
+      <p class="subtitle" id="profileSubtitle"></p>
+      <div id="adminActions" style="position:absolute;top:20px;right:20px;display:none;">
+        <button class="tab-btn" id="toggleBlockBtn">拉黑用户</button>
+      </div>
+    </header>
+
+    <nav class="profile-tabs" id="profileTabs" style="display:none;"></nav>
+
+    <main>
+      <section class="section" id="postsSection">
+        <h2>发布内容</h2>
+        <div id="postsList" class="list"></div>
+        <div id="postsEmpty" class="muted" style="display:none;">暂无发布</div>
+      </section>
+      <section class="section" id="favoritesSection" style="display:none;">
+        <h2>我的收藏</h2>
+        <div id="favoritesList" class="list"></div>
+        <div id="favoritesEmpty" class="muted" style="display:none;">暂无收藏</div>
+      </section>
+      <section class="section" id="commentsSection" style="display:none;">
+        <h2>收到的评论</h2>
+        <div id="commentsList" class="list"></div>
+        <div id="commentsEmpty" class="muted" style="display:none;">暂无评论</div>
+      </section>
+      <section class="section" id="messagesSection" style="display:none;">
+        <h2>私信对话</h2>
+        <div id="chatLayout" class="chat-layout">
+          <aside id="chatSidebar" class="chat-sidebar" style="display:none;">
+            <h3 style="margin-bottom:8px;">联系人</h3>
+            <div id="chatContacts" class="list"></div>
+            <div id="chatContactsEmpty" class="muted" style="display:none;">暂无联系人</div>
+          </aside>
+          <section id="chatMain" class="chat-main">
+            <div id="chatInfo" class="muted" style="margin-bottom:8px;"></div>
+            <div id="chatThread" class="chat-thread"></div>
+            <div class="message-compose-row" style="margin-top:8px;">
+              <input id="toUserInput" type="text" placeholder="收件人用户名" style="display:none;" />
+              <textarea id="messageContent" placeholder="写下你想说的话..." rows="1"></textarea>
+              <button id="sendMessageBtn" class="btn-primary">发送</button>
+            </div>
+            <div id="messageStatus" class="muted" style="margin-top:8px;"></div>
+          </section>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
